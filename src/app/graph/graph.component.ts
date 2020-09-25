@@ -6,6 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./graph.component.sass']
 })
 export class GraphComponent implements OnInit {
+  items:number[] =  [1,2,3,4,5];
 
   constructor() { }
 
