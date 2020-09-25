@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TypeVisit, Visit} from '../../model/human.data.model';
+import {HumanProfileModel, TypeVisit, Visit} from '../../model/human.data.model';
 
 @Component({
   selector: 'app-record',
@@ -8,6 +8,7 @@ import {TypeVisit, Visit} from '../../model/human.data.model';
 })
 export class RecordComponent implements OnInit {
   visits: Visit[];
+  humanProfile: HumanProfileModel;
 
   constructor() {
   }
@@ -36,6 +37,10 @@ export class RecordComponent implements OnInit {
       data = data.sort((x,y) =>  x.dateVisit > y.dateVisit ? 1 : -1 );
 
       this.visits = data;
+
+
+      this.humanProfile = { name : "liran" , numberVisitors : this.visits.length,points:50,region:"Israel",
+        profile_image:"https://www.iconfinder.com/data/icons/human-user-business-person-avatars/100/23A-1User-512.png" }
     });
 
 

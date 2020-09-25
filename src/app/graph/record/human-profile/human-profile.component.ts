@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {HumanProfileModel} from '../../../model/human.data.model';
 
 @Component({
   selector: 'app-human-profile',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HumanProfileComponent implements OnInit {
 
+  @Input()
+  humanProfile:HumanProfileModel;
+
   constructor() { }
+
+
 
   ngOnInit(): void {
   }

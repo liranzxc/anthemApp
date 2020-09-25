@@ -1,8 +1,7 @@
 
 
-export interface humanProfileModel  // for profile comp
+export interface HumanProfileModel  // for profile comp
 {
-  symbol : string; // for graph
   region :string;
   name : string;
   profile_image:string;
@@ -23,6 +22,6 @@ export interface Visit {
 }
 
 export interface Record {
-  humanProfile : humanProfileModel;
+  humanProfile : HumanProfileModel;
   visits : Visit[];
 }

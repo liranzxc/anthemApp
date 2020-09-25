@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VlineComponent } from './vline.component';
+import {VlineComponent} from './vline.component';
 
 describe('VlineComponent', () => {
   let component: VlineComponent;

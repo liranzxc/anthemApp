@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HumanGraphDataComponent } from './human-graph-data.component';
+import {HumanGraphDataComponent} from './human-graph-data.component';
 
 describe('HumanGraphDataComponent', () => {
   let component: HumanGraphDataComponent;

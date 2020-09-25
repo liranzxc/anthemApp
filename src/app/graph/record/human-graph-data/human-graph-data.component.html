@@ -2,12 +2,12 @@
 <div>
 
   <mat-card>
-     <x-chartist
-      [type]="type"
-      [data]="data"
-      [options]="options"
-      [events]="events"
-    ></x-chartist>
+    <canvas baseChart
+    [datasets]="scatterChartData"
+    [options]="scatterChartOptions"
+    [chartType]="scatterChartType">
+  </canvas>
+
   </mat-card>
 
 

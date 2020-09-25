@@ -1,9 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {TypeVisit, Visit} from '../../../model/human.data.model';
-import * as Chartist from 'chartist';
-import {IChartistData, IChartistSeriesData, ILineChartOptions} from 'chartist';
-import {ChartEvent, ChartType} from 'ng-chartist';
-import * as  Moment from 'moment';
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 
 @Component({
   selector: 'app-human-graph-data',
@@ -18,56 +15,49 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
   private arrData = [];
 
-  data: IChartistData;
 
-  type: ChartType = 'Line';
-  options: ILineChartOptions = {
+  public scatterChartData: ChartDataSets[] = [
+    // {
+    //   data: [
+    //     { x: 1, y: 1 },
+    //     { x: 2, y: 3 },
+    //     { x: 3, y: -2 },
+    //     { x: 4, y: 4 },
+    //     { x: 5, y: -3, r: 20 },
+    //   ],
+    //   label: 'Series A',
+    //   pointRadius: 10,
+    // },
+  ];
+  public scatterChartOptions: ChartOptions = {
+    responsive: true,
 
-    showLine: true,
-    showArea:true,
-    showPoint:true,
-    axisX: {
-      showLabel:true,
-      type: Chartist.FixedScaleAxis,
-      divisor: 5,
-      labelInterpolationFnc: function(value) {
-        return Moment(value).format('DD/MM/YYYY');
-      }
-    },
 
-    axisY:{
-      showLabel:true,
-    },
-    plugins:[
-    ]
-  };
+    scales: {
 
-  events: ChartEvent = {
-
-    draw: (data) => {
-
-      //
-      // if (data.type === 'point') {
-      //   // We are creating a new path SVG element that draws a triangle around the point coordinates
-      //
-      //   var circle = new Chartist.Svg('circle', {
-      //     cx: [data.x],
-      //     cy: [data.y],
-      //     r: [5],
-      //     'ct:value': data.value.y,
-      //     'ct:meta': data.meta,
-      //     style: 'pointer-events: all !important',
-      //     class: 'my-cool-point',
-      //   }, 'ct-area');
-      //
-      //   // With data.element we get the Chartist SVG wrapper and we can replace the original point drawn by Chartist with our newly created triangle
-      //   data.element.replace(circle);
-      //
-      //   // console.log("draw")
-      // }
+      xAxes: [
+        {
+          type: 'time',
+          time: {
+            unit: 'month',
+          }
+        }
+      ],
+      yAxes: [
+        {
+          scaleLabel:{
+            fontFamily:"Arial"
+          },
+          ticks: {
+            suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+          }
+        }
+      ]
 
     }
   };
+
+  public scatterChartType: ChartType = 'line';
 
 
   @Input()
@@ -93,17 +83,20 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
     let groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.typeVisit);
 
-    for await (let entry of groups.entries())
-    {
-      const [key,visits] = entry;
+    for await (let entry of groups.entries()) {
+      const [key, visits] = entry;
 
 
       let arr = visits.map(visit => {
-        return {x: new Date(visit.dateVisit) , y : visit.typeVisit ,meta  : `date is ${Moment(new Date(visit.dateVisit)).format("DD-MM-YYYY")}`}
+        return {x: new Date(visit.dateVisit), y: visit.typeVisit };
       });
+      this.arrData.push({
+        label: TypeVisit[key],
+        data: arr,
+        pointRadius : 5 ,
+                fill: false,
 
-      this.arrData.push({   name : TypeVisit[key],
-          data: arr});
+      });
 
     }
 
@@ -112,12 +105,6 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    this.data = {
-    series: []
-
-
-    };
-
 
   }
 
@@ -126,7 +113,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
     if (changes['visits'] && this.visits) {
       this.createSeries().then(() => {
 
-        this.data.series = this.arrData;
+        this.scatterChartData = this.arrData;
 
         // console.log(this.data);
         console.log('graph ready');
