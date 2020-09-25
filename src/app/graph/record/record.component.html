@@ -1,15 +1,13 @@
-<mat-card>
 
-<mat-grid-list class="mat-grid-list" cols="2" rowHeight="70px" [gutterSize]=0 >
+  <div class="row">
+    <mat-card class="mat-card">
+                <app-human-profile [humanProfile]="humanProfile"></app-human-profile>
+    </mat-card>
 
-  <mat-grid-tile class="mat-grid-tile" [colspan]="1" [rowspan]="1">
-          <app-human-profile [humanProfile]="humanProfile"></app-human-profile>
-  </mat-grid-tile>
+    <mat-card class="mat-card">
 
-  <mat-grid-tile class="mat-grid-tile" [colspan]="1" [rowspan]="1">
-          <app-human-graph-data [visits]="visits"></app-human-graph-data>
-  </mat-grid-tile>
+                <app-human-graph-data [visits]="visits"></app-human-graph-data>
+    </mat-card>
+  </div>
 
-</mat-grid-list>
 
-</mat-card>
