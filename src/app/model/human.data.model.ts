@@ -19,7 +19,7 @@ export enum TypeVisit {
 
 export interface Visit {
   typeVisit:TypeVisit | number;
-  dateVisit:Date;
+  dateVisit:Date | number;
 }
 
 export interface Record {

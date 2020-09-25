@@ -13,7 +13,7 @@ export class RecordComponent implements OnInit {
   }
 
   randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime();
   }
   getRandomType(): number {
     const len = (Object.keys(TypeVisit).length / 2) - 1; // returns the length
@@ -31,9 +31,9 @@ export class RecordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createRandomData(30,new Date(2020,8,1,12),new Date()).then((data:Visit[] )=> {
+    this.createRandomData(100,new Date(2020,1,1,12),new Date()).then((data:Visit[] )=> {
 
-      data = data.sort((x,y) =>  x.dateVisit.getTime() > y.dateVisit.getTime() ? 1 : -1 );
+      data = data.sort((x,y) =>  x.dateVisit > y.dateVisit ? 1 : -1 );
 
       this.visits = data;
     });
