@@ -1,19 +1,21 @@
 
-  <div class="row">
-    <mat-card class="mat-card">
-                <app-human-profile [humanProfile]="humanProfile"></app-human-profile>
-    </mat-card>
+  <mat-card class="row">
 
-    <mat-card class="mat-card">
+    <mat-card>
+      <mat-card-subtitle>Patient details</mat-card-subtitle>
+    <app-human-profile [humanProfile]="humanProfile"></app-human-profile>
+      </mat-card>
 
-                <app-human-graph-data [visits$]="this.visitsSubject$.asObservable()"></app-human-graph-data>
-    </mat-card>
+     <mat-card>
+       <mat-card-subtitle>Loading events patient</mat-card-subtitle>
+       <app-human-graph-data [visits$]="this.visitsSubject$.asObservable()"></app-human-graph-data>
+     </mat-card>
 
+       <mat-card>
+         <mat-card-subtitle>Predict % for getting to hospital</mat-card-subtitle>
+         <app-predict-graph></app-predict-graph>
+       </mat-card>
 
-    <mat-card class="mat-card">
-
-      <app-predict-graph></app-predict-graph>
-    </mat-card>
-  </div>
+  </mat-card>
 
 

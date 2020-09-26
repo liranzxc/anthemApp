@@ -34,12 +34,11 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
   public scatterChartOptions: ChartOptions = {
     responsive: true,
 
+    maintainAspectRatio:false,
     animation: {
       duration: 0,
 
     },
-
-
     scales: {
 
       xAxes: [
@@ -92,7 +91,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
   async createSeries() {
 
-    this.arrData =[];
+    this.arrData = [];
 
     let groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.typeVisit);
 
@@ -125,8 +124,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       if (visit) {
 
 
-        if(this.visits.length > 50 )
-        {
+        if (this.visits.length > 50) {
           this.visits.shift();
         }
         this.visits.push(visit);
@@ -146,7 +144,6 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-
 
 
   }

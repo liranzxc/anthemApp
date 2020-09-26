@@ -25,6 +25,8 @@ export class PredictGraphComponent implements OnInit {
   scatterChartOptions: ChartOptions={
 
     responsive:true,
+    maintainAspectRatio: false,
+
 
     animation: {
         duration: 1
