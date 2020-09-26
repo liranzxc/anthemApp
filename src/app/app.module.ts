@@ -25,7 +25,6 @@ import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FormsModule} from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {CovalentLayoutModule} from '@covalent/core/layout';
 import {CovalentStepsModule} from '@covalent/core/steps';
@@ -35,6 +34,9 @@ import {CovalentMenuModule} from '@covalent/core/menu';
 import {TdMediaService} from '@covalent/core/media';
 import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { SlidebarComponent } from './shared/slidebar/slidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,9 @@ import {HttpClientModule} from '@angular/common/http';
     HumanProfileComponent,
     HumanGraphDataComponent,
     PredictGraphComponent,
-    DashboardComponent,
+    HeaderComponent,
+    FooterComponent,
+    SlidebarComponent,
   ],
   imports: [
 HttpClientModule,
@@ -54,7 +58,6 @@ HttpClientModule,
     RouterModule.forRoot([
 
       {path: '', component: GraphComponent},
-      {path: 'dashboard', component: DashboardComponent}
     ]),
     MatDividerModule,
     MatCardModule,
