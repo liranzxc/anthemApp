@@ -1,6 +1,9 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TypeVisit, Visit} from '../../../model/human.data.model';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import {BaseChartDirective} from 'ng2-charts';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-human-graph-data',
@@ -9,13 +12,12 @@ import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 })
 export class HumanGraphDataComponent implements OnInit, OnChanges {
 
+  @ViewChild(BaseChartDirective) private _chart;
 
   constructor() {
   }
 
   private arrData = [];
-
-
   public scatterChartData: ChartDataSets[] = [
     // {
     //   data: [
@@ -32,21 +34,24 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
   public scatterChartOptions: ChartOptions = {
     responsive: true,
 
+    animation: {
+      duration: 0,
 
+    },
     scales: {
 
       xAxes: [
         {
           type: 'time',
           time: {
-            unit: 'month',
+            unit: 'day',
           }
         }
       ],
       yAxes: [
         {
-          scaleLabel:{
-            fontFamily:"Arial"
+          scaleLabel: {
+            fontFamily: 'Arial'
           },
           ticks: {
             suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
@@ -61,7 +66,9 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
 
   @Input()
-  visits: Visit[];
+  visits$: Observable<Visit> = new Observable<Visit>();
+
+  visits: Visit[] = [];
 
 
   groupBy(list, keyGetter) {
@@ -81,6 +88,8 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
   async createSeries() {
 
+    this.arrData =[];
+
     let groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.typeVisit);
 
     for await (let entry of groups.entries()) {
@@ -88,13 +97,13 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
 
       let arr = visits.map(visit => {
-        return {x: new Date(visit.dateVisit), y: visit.typeVisit };
+        return {x: new Date(visit.dateVisit), y: visit.typeVisit};
       });
       this.arrData.push({
         label: TypeVisit[key],
         data: arr,
-        pointRadius : 5 ,
-                fill: false,
+        pointRadius: 5,
+        fill: false,
 
       });
 
@@ -102,23 +111,37 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
 
   }
-
 
   ngOnInit(): void {
 
+    this.visits$.pipe(tap(visit => {
+
+      console.log(visit);
+      if (visit) {
+
+
+        if(this.visits.length > 50 )
+        {
+          this.visits.shift();
+        }
+        this.visits.push(visit);
+
+        this.createSeries().then(
+          () => {
+            this.scatterChartData = this.arrData;
+            this._chart.refresh();
+          }
+        );
+      }
+
+
+    })).subscribe();
+
   }
+
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if (changes['visits'] && this.visits) {
-      this.createSeries().then(() => {
-
-        this.scatterChartData = this.arrData;
-
-        // console.log(this.data);
-        console.log('graph ready');
-      });
-    }
 
 
   }

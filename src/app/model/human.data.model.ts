@@ -21,7 +21,7 @@ export interface Visit {
   dateVisit:Date | number;
 }
 
-export interface Record {
+export interface RecordModel {
   humanProfile : HumanProfileModel;
   visits : Visit[];
 }

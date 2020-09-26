@@ -9,7 +9,7 @@ import {HumanProfileModel} from '../../../model/human.data.model';
 export class HumanProfileComponent implements OnInit {
 
   @Input()
-  humanProfile:HumanProfileModel;
+  humanProfile:HumanProfileModel = {} as HumanProfileModel;
 
   constructor() { }
 

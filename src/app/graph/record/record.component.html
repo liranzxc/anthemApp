@@ -6,7 +6,13 @@
 
     <mat-card class="mat-card">
 
-                <app-human-graph-data [visits]="visits"></app-human-graph-data>
+                <app-human-graph-data [visits$]="this.visitsSubject$.asObservable()"></app-human-graph-data>
+    </mat-card>
+
+
+    <mat-card class="mat-card">
+
+      <app-predict-graph></app-predict-graph>
     </mat-card>
   </div>
 
