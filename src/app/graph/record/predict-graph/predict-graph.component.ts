@@ -16,10 +16,10 @@ export class PredictGraphComponent implements OnInit {
 
     {
 
-      pointBackgroundColor:'rgb(104,255,123)',
-      pointBorderColor:'rgb(104,255,123)',
-      borderColor:'rgb(104,255,123)',
-      backgroundColor: 'rgba(104,255,123,0.5)',
+      pointBackgroundColor:'rgb(255,157,196)',
+      pointBorderColor:'rgb(255,157,196)',
+      borderColor:'rgb(255,157,196)',
+      backgroundColor: 'rgba(255,157,196,0.3)',
       label:'predict',
      data:[]
     }

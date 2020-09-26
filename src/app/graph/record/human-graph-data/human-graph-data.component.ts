@@ -64,6 +64,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       yAxes: [
         {
 
+          display:false,
           scaleLabel: {
         fontColor:'black',
 
@@ -121,7 +122,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
         label: TypeVisit[key],
         data: arr,
         pointRadius: 5,
-        fill: true,
+        fill: false,
 
       } as ChartDataSets);
 

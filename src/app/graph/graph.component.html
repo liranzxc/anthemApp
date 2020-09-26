@@ -1,7 +1,7 @@
 <mat-card class="card">
   <h2>Event tracking of patients</h2>
 <div class="col">
-  <div *ngFor="let record of records">
+  <div *ngFor="let record of records" style="padding: 10px">
       <app-record [humanProfile]="record.humanProfile"></app-record>
     <mat-divider></mat-divider>
   </div>
