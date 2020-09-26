@@ -7,12 +7,10 @@
       </mat-card>
 
      <mat-card>
-       <mat-card-subtitle>Loading events patient</mat-card-subtitle>
        <app-human-graph-data [visits$]="this.visitsSubject$.asObservable()"></app-human-graph-data>
      </mat-card>
 
        <mat-card>
-         <mat-card-subtitle>Predict % for getting to hospital</mat-card-subtitle>
          <app-predict-graph></app-predict-graph>
        </mat-card>
 

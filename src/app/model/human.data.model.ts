@@ -10,10 +10,10 @@ export interface HumanProfileModel  // for profile comp
 }
 
 export enum TypeVisit {
-  MEDICAL_TAKE=1,
-  HOSPITALIZATIONS = 2,
-  VISIT_DOCTOR=3,
-  VISIT_PSYCHOLOGIST=4
+  Medical_take=1,
+  Hospitalizations = 2,
+  Visit_doctor=3,
+  Visit_psychologist=4
 }
 
 export interface Visit {

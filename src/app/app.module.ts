@@ -37,6 +37,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { SlidebarComponent } from './shared/slidebar/slidebar.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,7 @@ import { SlidebarComponent } from './shared/slidebar/slidebar.component';
     SlidebarComponent,
   ],
   imports: [
-HttpClientModule,
+    HttpClientModule,
     ChartsModule,
     BrowserModule,
     AppRoutingModule,
@@ -68,7 +69,7 @@ HttpClientModule,
     MatDialogModule, MatSidenavModule, FormsModule, MatCheckboxModule,
 
     CovalentLayoutModule,
-    CovalentStepsModule, CovalentSearchModule, CovalentNotificationsModule, CovalentMenuModule,MatNativeDateModule
+    CovalentStepsModule, CovalentSearchModule, CovalentNotificationsModule, CovalentMenuModule, MatNativeDateModule, MatProgressSpinnerModule,
     // (optional) Additional Covalent Modules imports
   ],
   providers: [TdMediaService],

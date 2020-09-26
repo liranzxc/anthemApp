@@ -12,11 +12,14 @@ export class PredictGraphComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) private _chart;
 
-
-
   scatterChartData: ChartDataSets[]=[
 
     {
+
+      pointBackgroundColor:'rgb(104,255,123)',
+      pointBorderColor:'rgb(104,255,123)',
+      borderColor:'rgb(104,255,123)',
+      backgroundColor: 'rgba(104,255,123,0.5)',
       label:'predict',
      data:[]
     }
@@ -27,27 +30,41 @@ export class PredictGraphComponent implements OnInit {
     responsive:true,
     maintainAspectRatio: false,
 
+    title:{
+      display:true,
+      fontColor:'black',
+      text:"Predict % for getting to hospital\n"
+    },
+
 
     animation: {
         duration: 1
     },
 
+    legend:{
+      labels:{
+        fontColor:'black'
+      }
+    },
     scales:{
        xAxes: [
         {
 
           type: 'time',
           time: {
-            unit: 'day',
+            unit: 'second',
           }
         }
       ],
       yAxes: [
         {
+
           scaleLabel:{
-            fontFamily:"Arial"
+            fontFamily:"Arial",
+            fontColor: 'black'
           },
           ticks: {
+            fontColor:'black',
             suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
             max:1
           }
@@ -77,7 +94,7 @@ export class PredictGraphComponent implements OnInit {
       dataset.data.push(point);
 
     });
-    chart.update({duration : 0 });
+    chart.update();
 }
 
 

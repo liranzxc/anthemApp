@@ -34,10 +34,22 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
   public scatterChartOptions: ChartOptions = {
     responsive: true,
 
+     title:{
+      display:true,
+      text:"Loading events patient",
+       fontColor:'black',
+    },
+
+
     maintainAspectRatio:false,
     animation: {
       duration: 0,
 
+    },
+     legend:{
+      labels:{
+        fontColor:'black'
+      }
     },
     scales: {
 
@@ -53,10 +65,13 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
         {
 
           scaleLabel: {
+        fontColor:'black',
 
             fontFamily: 'Arial'
           },
           ticks: {
+                    fontColor:'black',
+
             suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
           }
         }
@@ -104,12 +119,11 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       });
       this.arrData.push({
         label: TypeVisit[key],
-
         data: arr,
         pointRadius: 5,
-        fill: false,
+        fill: true,
 
-      });
+      } as ChartDataSets);
 
     }
 
@@ -124,7 +138,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       if (visit) {
 
 
-        if (this.visits.length > 50) {
+        if (this.visits.length > 20) {
           this.visits.shift();
         }
         this.visits.push(visit);
