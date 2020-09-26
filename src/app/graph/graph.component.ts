@@ -10,42 +10,30 @@ export class GraphComponent implements OnInit {
 
 
   records = [
-
     {
-
-      humanProfile : {
+      humanProfile: {
         name: 'liran', numberVisitors: 0, points: 50, region: 'Israel',
         profile_image: 'https://www.iconfinder.com/data/icons/human-user-business-person-avatars/100/23A-1User-512.png'
       },
-
-
     }
     ,
-     {
+    {
 
-      humanProfile : {
+      humanProfile: {
         name: 'Liam', numberVisitors: 0, points: 50, region: 'Canada',
         profile_image: 'https://www.iconfinder.com/data/icons/human-user-business-person-avatars/100/23A-1User-512.png'
       },
-
-
     },
-
-     {
-
-      humanProfile : {
+    {
+      humanProfile: {
         name: 'William ', numberVisitors: 0, points: 50, region: 'USA',
         profile_image: 'https://www.iconfinder.com/data/icons/human-user-business-person-avatars/100/23A-1User-512.png'
       },
-
-
     }
-
-
-
   ] as RecordModel[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

@@ -38,6 +38,8 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       duration: 0,
 
     },
+
+
     scales: {
 
       xAxes: [
@@ -50,7 +52,9 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       ],
       yAxes: [
         {
+
           scaleLabel: {
+
             fontFamily: 'Arial'
           },
           ticks: {
@@ -101,6 +105,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       });
       this.arrData.push({
         label: TypeVisit[key],
+
         data: arr,
         pointRadius: 5,
         fill: false,
