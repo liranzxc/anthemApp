@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {HumanProfileModel, TypeVisit, Visit} from '../../model/human.data.model';
+import {arrayEnumTypeVisit, HumanProfileModel, Visit} from '../../model/human.data.model';
 import {BehaviorSubject} from 'rxjs';
 import {PredictGraphComponent} from './predict-graph/predict-graph.component';
 
@@ -24,21 +24,18 @@ export class RecordComponent implements OnInit {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).getTime();
   }
 
-  getRandomType(): number {
+  getRandomType(): Visit {
 
+    const indexValue = Math.floor(Math.random() * arrayEnumTypeVisit.length);
 
-    const keys = Object.keys(TypeVisit);
-    const reaKeys = keys.slice(keys.length / 2, keys.length);
-    const random = Math.floor(Math.random() * reaKeys.length);
-    console.log(random);
-    return random + 1;
+    return {valueVisit : indexValue  ,  typeVisit : arrayEnumTypeVisit[indexValue]} as Visit
   }
 
   async createRandomData(n: number, start, end) {
     const arr = Array.from(Array(n).keys());
 
     let visits = arr.map(item => {
-      return {dateVisit: this.randomDate(start, end), typeVisit: this.getRandomType()} as Visit;
+      return {dateVisit: this.randomDate(start, end), ...this.getRandomType()  } as Visit;
     });
 
     visits = visits.sort((x, y) => x.dateVisit > y.dateVisit ? 1 : -1);

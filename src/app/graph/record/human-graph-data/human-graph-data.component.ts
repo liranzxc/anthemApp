@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {TypeVisit, Visit} from '../../../model/human.data.model';
-import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
-import {BaseChartDirective, Label} from 'ng2-charts';
+import {arrayEnumTypeVisit, Visit} from '../../../model/human.data.model';
+import {Chart, ChartDataSets, ChartLegendLabelItem, ChartOptions, ChartType} from 'chart.js';
+import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
@@ -14,9 +14,14 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
   // tslint:disable-next-line:variable-name
   @ViewChild(BaseChartDirective) private _chart;
+  private colors: string[];
+
 
   constructor() {
+
+
   }
+
 
   private arrData = [];
   public scatterChartData: ChartDataSets[] = [
@@ -48,9 +53,10 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
     },
     legend: {
-      labels:  {
-        fontColor: 'black'
+      labels: {
+        fontColor: 'black',
       }
+
     },
     scales: {
 
@@ -89,14 +95,8 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
   visits$: Observable<Visit> = new Observable<Visit>();
 
   visits: Visit[] = [];
-  scatterChartLabels: Label[] = Object.keys(TypeVisit);
-
-  scatterChartColor: [
-
-    { backgroundColor: 'green' },
-    { backgroundColor: 'red' },
-    { backgroundColor: 'blue' }
-  ];
+  scatterChartLabels: Label[] = arrayEnumTypeVisit;
+  scatterChartColor: Color[] = [];
 
 
   groupBy(list, keyGetter) {
@@ -118,18 +118,20 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
     this.arrData = [];
 
-    const groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.typeVisit);
+    const groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.valueVisit);
 
     for await (const entry of groups.entries()) {
       const [key, visits] = entry;
 
 
       const arr = visits.map(visit => {
-        return {x: new Date(visit.dateVisit), y: visit.typeVisit};
+        return {x: new Date(visit.dateVisit), y: visit.valueVisit + 1};
       });
       this.arrData.push({
-        label: TypeVisit[key],
+        label: arrayEnumTypeVisit[key],
+        pointBackgroundColor: this.colors[key],
         data: arr,
+        borderColor:this.colors[key],
         pointRadius: 5,
         fill: false,
 
@@ -140,15 +142,33 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
   }
 
+  generateLabels(chart: Chart): ChartLegendLabelItem[] {
+
+    this.colors = ['red', 'blue', 'green', 'yellow'];
+
+    let chartLegendLabelItem: ChartLegendLabelItem[] = arrayEnumTypeVisit.map((label, index) => {
+
+      return {
+        text: label,
+        fillStyle: this.colors[index],
+      } as ChartLegendLabelItem;
+    });
+
+
+    return chartLegendLabelItem;
+  }
+
   ngOnInit(): void {
+    this.colors = ['red', 'blue', 'green', 'yellow'];
+
+    this.scatterChartOptions.legend.labels.generateLabels = this.generateLabels;
 
     this.visits$.pipe(tap(visit => {
 
-      console.log(visit);
       if (visit) {
 
 
-        if (this.visits.length > 20) {
+        if (this.visits.length > 20000) {
           this.visits.shift();
         }
         this.visits.push(visit);
