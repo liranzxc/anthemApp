@@ -25,14 +25,17 @@ export class RecordComponent implements OnInit {
   }
 
   getRandomType(): number {
-    const len = (Object.keys(TypeVisit).length / 2) - 1; // returns the length
-    // calculate the random number
-    const item = (Math.floor(Math.random() * len) + 0);
-    return item + 1;
+
+
+    const keys = Object.keys(TypeVisit);
+    const reaKeys = keys.slice(keys.length / 2, keys.length);
+    const random = Math.floor(Math.random() * reaKeys.length);
+    console.log(random);
+    return random + 1;
   }
 
   async createRandomData(n: number, start, end) {
-    let arr = Array.from(Array(n).keys());
+    const arr = Array.from(Array(n).keys());
 
     let visits = arr.map(item => {
       return {dateVisit: this.randomDate(start, end), typeVisit: this.getRandomType()} as Visit;
@@ -44,31 +47,30 @@ export class RecordComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let nextYear = new Date();
-    nextYear.setFullYear(nextYear.getFullYear() + 1 );
+    const date = new Date(1990, 5, 4, 2, 3);
 
-    this.createRandomData(100, new Date(), nextYear).then((data: Visit[]) => {
+    this.createRandomData(100, date, new Date()).then((data: Visit[]) => {
 
       // this.humanProfile = {
       //   name: 'liran', numberVisitors: 0, points: 50, region: 'Israel',
       //   profile_image: 'https://www.iconfinder.com/data/icons/human-user-business-person-avatars/100/23A-1User-512.png'
       // };
 
-      setInterval(async ()=> {
+      setInterval(async () => {
 
-        if(data.length === 0)
-        {
-           let nextYear = new Date();
-          nextYear.setFullYear(nextYear.getFullYear() + 1 );
+        if (data.length === 0) {
+          // tslint:disable-next-line:no-shadowed-variable
+          const nextYear = new Date();
+          nextYear.setFullYear(nextYear.getFullYear() + 1);
 
-          data = await this.createRandomData(100,new Date(), nextYear);
+          data = await this.createRandomData(100, new Date(), nextYear);
         }
 
-        let item = data.shift();
+        const item = data.shift();
         this.visitsSubject$.next(item);
-        this.humanProfile.numberVisitors = this.humanProfile.numberVisitors + 1 ;
+        this.humanProfile.numberVisitors = this.humanProfile.numberVisitors + 1;
         this.humanProfile.points = this.predictCompany.points;
-      },1000);
+      }, 1000);
 
 
     });

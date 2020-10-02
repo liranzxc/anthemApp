@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TypeVisit, Visit} from '../../../model/human.data.model';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
-import {BaseChartDirective} from 'ng2-charts';
+import {BaseChartDirective, Label} from 'ng2-charts';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
@@ -12,6 +12,7 @@ import {tap} from 'rxjs/operators';
 })
 export class HumanGraphDataComponent implements OnInit, OnChanges {
 
+  // tslint:disable-next-line:variable-name
   @ViewChild(BaseChartDirective) private _chart;
 
   constructor() {
@@ -34,21 +35,21 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
   public scatterChartOptions: ChartOptions = {
     responsive: true,
 
-     title:{
-      display:true,
-      text:"Loading events patient",
-       fontColor:'black',
+    title: {
+      display: true,
+      text: 'Replaying Patient History',
+      fontColor: 'black',
     },
 
 
-    maintainAspectRatio:false,
+    maintainAspectRatio: false,
     animation: {
       duration: 0,
 
     },
-     legend:{
-      labels:{
-        fontColor:'black'
+    legend: {
+      labels:  {
+        fontColor: 'black'
       }
     },
     scales: {
@@ -57,21 +58,21 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
         {
           type: 'time',
           time: {
-            unit: 'day',
+            unit: 'month',
           }
         }
       ],
       yAxes: [
         {
 
-          display:false,
+          display: false,
           scaleLabel: {
-        fontColor:'black',
+            fontColor: 'black',
 
             fontFamily: 'Arial'
           },
           ticks: {
-                    fontColor:'black',
+            fontColor: 'black',
 
             suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
           }
@@ -88,6 +89,14 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
   visits$: Observable<Visit> = new Observable<Visit>();
 
   visits: Visit[] = [];
+  scatterChartLabels: Label[] = Object.keys(TypeVisit);
+
+  scatterChartColor: [
+
+    { backgroundColor: 'green' },
+    { backgroundColor: 'red' },
+    { backgroundColor: 'blue' }
+  ];
 
 
   groupBy(list, keyGetter) {
@@ -109,13 +118,13 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
 
     this.arrData = [];
 
-    let groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.typeVisit);
+    const groups: Map<number, Visit[]> = this.groupBy(this.visits, (visit: Visit) => visit.typeVisit);
 
-    for await (let entry of groups.entries()) {
+    for await (const entry of groups.entries()) {
       const [key, visits] = entry;
 
 
-      let arr = visits.map(visit => {
+      const arr = visits.map(visit => {
         return {x: new Date(visit.dateVisit), y: visit.typeVisit};
       });
       this.arrData.push({

@@ -12,42 +12,41 @@ export class PredictGraphComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) private _chart;
 
-  scatterChartData: ChartDataSets[]=[
+  scatterChartData: ChartDataSets[] = [
 
     {
-
-      pointBackgroundColor:'rgb(255,157,196)',
-      pointBorderColor:'rgb(255,157,196)',
-      borderColor:'rgb(255,157,196)',
+      pointBackgroundColor: 'rgb(255,157,196)',
+      pointBorderColor: 'rgb(255,157,196)',
+      borderColor: 'rgb(255,157,196)',
       backgroundColor: 'rgba(255,157,196,0.3)',
-      label:'predict',
-     data:[]
+      data: []
     }
 
   ];
-  scatterChartOptions: ChartOptions={
+  scatterChartOptions: ChartOptions = {
 
-    responsive:true,
+    responsive: true,
     maintainAspectRatio: false,
 
-    title:{
-      display:true,
-      fontColor:'black',
-      text:"Predict % for getting to hospital\n"
+    title: {
+      display: true,
+      fontColor: 'black',
+      text: 'Hospitalization Risk'
     },
 
 
     animation: {
-        duration: 1
+      duration: 1
     },
 
-    legend:{
-      labels:{
-        fontColor:'black'
+    legend: {
+      display: false,
+      labels: {
+        fontColor: 'black'
       }
     },
-    scales:{
-       xAxes: [
+    scales: {
+      xAxes: [
         {
 
           type: 'time',
@@ -59,20 +58,19 @@ export class PredictGraphComponent implements OnInit {
       yAxes: [
         {
 
-          scaleLabel:{
-            fontFamily:"Arial",
+          scaleLabel: {
+            display: true,
+            fontFamily: 'Arial',
             fontColor: 'black'
           },
           ticks: {
-            fontColor:'black',
+            fontColor: 'black',
             suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
-            max:1
+            max: 100
           }
         }
       ]
     }
-
-
 
 
   };
@@ -80,22 +78,21 @@ export class PredictGraphComponent implements OnInit {
   public points: number;
 
 
-  addData(chart, data:number ) {
+  addData(chart, data: number) {
     this.scatterChartData.forEach((dataset) => {
 
-      let point  = {x: new Date(), y: data } as ChartPoint;
+      let point = {x: new Date(), y: data} as ChartPoint;
 
-      if(dataset.data.length > 5)
-      {
-            dataset.data.shift();
+      if (dataset.data.length > 5) {
+        dataset.data.shift();
       }
 
-        // @ts-ignore
+      // @ts-ignore
       dataset.data.push(point);
 
     });
     chart.update();
-}
+  }
 
 
   forceChartRefresh() {
@@ -108,8 +105,8 @@ export class PredictGraphComponent implements OnInit {
   ngOnInit(): void {
 
     let interval = setInterval(() => {
-      this.points = Math.sin(Math.random() ) /1.5 ;
-      this.addData(this._chart,this.points);
+      this.points = (Math.sin(Math.random()) / 5 ) * 100 ;
+      this.addData(this._chart, this.points);
       this.forceChartRefresh();
     }, 1000);
   }
