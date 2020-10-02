@@ -44,7 +44,7 @@ export class RecordComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const date = new Date(1990, 5, 4, 2, 3);
+    const date = new Date(1985, 5, 4, 2, 3);
 
     this.createRandomData(100, date, new Date()).then((data: Visit[]) => {
 

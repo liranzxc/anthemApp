@@ -168,7 +168,7 @@ export class HumanGraphDataComponent implements OnInit, OnChanges {
       if (visit) {
 
 
-        if (this.visits.length > 20000) {
+        if (this.visits.length > 100) {
           this.visits.shift();
         }
         this.visits.push(visit);
